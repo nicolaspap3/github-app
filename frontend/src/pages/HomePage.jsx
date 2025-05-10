@@ -5,14 +5,13 @@ import Search from "../components/Search";
 import SortRepos from "../components/SortRepos";
 import Spinner from "../components/Spinner";
 import toast from "react-hot-toast";
-import { useAuthContext } from "../context/AuthContext";
 
 const HomePage = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sortType, setSortType] = useState("recent");
-  const { authUser } = useAuthContext();
+
   const getUserProfileAndRepos = useCallback(
     async (username = "nicolaspap3") => {
       setLoading(true);
@@ -35,8 +34,8 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    getUserProfileAndRepos(authUser.user.username);
-  }, [authUser.user.username, getUserProfileAndRepos]);
+    getUserProfileAndRepos();
+  }, [getUserProfileAndRepos]);
 
   const onSearch = async (e, username) => {
     e.preventDefault();
