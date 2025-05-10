@@ -12,7 +12,8 @@ const ExplorePage = () => {
     setRepos([]);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/explore/repos/` + language
+        `http://localhost:5000/api/explore/repos/` + language,
+        { credentials: "include" }
       );
       const { repos } = await res.json();
       setRepos(repos);

@@ -9,7 +9,7 @@ const LikesPage = () => {
   useEffect(() => {
     const getLikes = async () => {
       try {
-        const res = await fetch("/api/users/likes");
+        const res = await fetch("/api/users/likes", { credentials: "include" });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
 

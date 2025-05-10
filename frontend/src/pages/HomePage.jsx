@@ -16,7 +16,9 @@ const HomePage = () => {
     async (username = "nicolaspap3") => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/users/profile/${username}`);
+        const res = await fetch(`/api/users/profile/${username}`, {
+          credentials: "include",
+        });
         const { repos, userProfile } = await res.json();
         repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setRepos(repos);
