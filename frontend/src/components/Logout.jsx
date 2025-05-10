@@ -7,7 +7,7 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("/api/auth/logout", { credentials: "include" });
+      const res = await fetch("/api/auth/logout");
       // eslint-disable-next-line no-unused-vars
       const data = await res.json();
       setAuthUser(null);
