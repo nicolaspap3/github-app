@@ -13,23 +13,26 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [sortType, setSortType] = useState("recent");
   const { authUser } = useAuthContext();
-  const getUserProfileAndRepos = useCallback(async (username) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/users/profile/${username}`);
-      const { repos, userProfile } = await res.json();
-      repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      setRepos(repos);
-      setUserProfile(userProfile);
-      // console.log("userProfile:", userProfile);
-      // console.log("repos:", repos);
-      return { userProfile, repos };
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const getUserProfileAndRepos = useCallback(
+    async (username = "nicolaspap3") => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/users/profile/${username}`);
+        const { repos, userProfile } = await res.json();
+        repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setRepos(repos);
+        setUserProfile(userProfile);
+        // console.log("userProfile:", userProfile);
+        // console.log("repos:", repos);
+        return { userProfile, repos };
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     getUserProfileAndRepos(authUser.user.username);
