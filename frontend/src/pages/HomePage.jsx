@@ -5,37 +5,35 @@ import Search from "../components/Search";
 import SortRepos from "../components/SortRepos";
 import Spinner from "../components/Spinner";
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const HomePage = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sortType, setSortType] = useState("recent");
-
-  const getUserProfileAndRepos = useCallback(
-    async (username = "nicolaspap3") => {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/users/profile/${username}`);
-        const { repos, userProfile } = await res.json();
-        repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        setRepos(repos);
-        setUserProfile(userProfile);
-        // console.log("userProfile:", userProfile);
-        // console.log("repos:", repos);
-        return { userProfile, repos };
-      } catch (error) {
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    },
-    []
-  );
+  const { authUser } = useAuthContext();
+  const getUserProfileAndRepos = useCallback(async (username) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/users/profile/${username}`);
+      const { repos, userProfile } = await res.json();
+      repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setRepos(repos);
+      setUserProfile(userProfile);
+      // console.log("userProfile:", userProfile);
+      // console.log("repos:", repos);
+      return { userProfile, repos };
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    getUserProfileAndRepos();
-  }, [getUserProfileAndRepos]);
+    getUserProfileAndRepos(authUser.user.username);
+  }, [authUser.user.username, getUserProfileAndRepos]);
 
   const onSearch = async (e, username) => {
     e.preventDefault();
