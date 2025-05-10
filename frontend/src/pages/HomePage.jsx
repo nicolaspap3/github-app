@@ -16,9 +16,7 @@ const HomePage = () => {
     async (username = "nicolaspap3") => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/users/profile/${username}`, {
-          credentials: "include",
-        });
+        const res = await fetch(`/api/users/profile/${username}`);
         const { repos, userProfile } = await res.json();
         repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setRepos(repos);
@@ -36,8 +34,8 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    getUserProfileAndRepos(userProfile);
-  }, [getUserProfileAndRepos, userProfile]);
+    getUserProfileAndRepos();
+  }, [getUserProfileAndRepos]);
 
   const onSearch = async (e, username) => {
     e.preventDefault();
