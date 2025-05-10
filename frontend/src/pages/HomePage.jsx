@@ -36,8 +36,8 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    getUserProfileAndRepos();
-  }, [getUserProfileAndRepos]);
+    getUserProfileAndRepos(userProfile);
+  }, [getUserProfileAndRepos, userProfile]);
 
   const onSearch = async (e, username) => {
     e.preventDefault();
