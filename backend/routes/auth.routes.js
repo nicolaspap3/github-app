@@ -4,10 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const router = express.Router();
 
-router.get(
-  "/github",
-  passport.authenticate("github", { scope: ["user:email"] })
-);
+router.get("/github", passport.authenticate("github", { scope: "user:email" }));
 router.get(
   "/github/callback",
   passport.authenticate("github", {
