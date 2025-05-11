@@ -6,7 +6,7 @@ import SortRepos from "../components/SortRepos";
 import Spinner from "../components/Spinner";
 import toast from "react-hot-toast";
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,8 +36,8 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    getUserProfileAndRepos();
-  }, [getUserProfileAndRepos]);
+    getUserProfileAndRepos(user.username);
+  }, [getUserProfileAndRepos, user]);
 
   const onSearch = async (e, username) => {
     e.preventDefault();
