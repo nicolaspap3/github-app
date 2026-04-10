@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://github-app-f6sd.onrender.com",
+        target: "http://localhost:5000",
       },
     },
   },
